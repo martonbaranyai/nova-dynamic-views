@@ -28,29 +28,57 @@
       autocomplete="off"
       ref="form"
     >
-      <div class="mb-8 space-y-4">
-        <component
-          v-for="panel in panels"
-          :key="panel.id"
-          :is="'form-' + panel.component"
-          @update-last-retrieved-at-timestamp="updateLastRetrievedAtTimestamp"
-          @file-deleted="handleFileDeleted"
-          @field-changed="onUpdateFormStatus"
-          @file-upload-started="handleFileUploadStarted"
-          @file-upload-finished="handleFileUploadFinished"
-          :panel="panel"
-          :name="panel.name"
-          :resource-id="resourceId"
-          :resource-name="resourceName"
-          :fields="panel.fields"
-          :form-unique-id="formUniqueId"
-          mode="form"
-          :validation-errors="validationErrors"
-          :via-resource="viaResource"
-          :via-resource-id="viaResourceId"
-          :via-relationship="viaRelationship"
-          :show-help-text="true"
-        />
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+        <!-- Left column (2/3 width) -->
+        <div class="md:col-span-2 space-y-4">
+          <component
+            v-for="(panel, index) in panels.slice(1)"
+            :key="panel.id"
+            :is="'form-' + panel.component"
+            @update-last-retrieved-at-timestamp="updateLastRetrievedAtTimestamp"
+            @file-deleted="handleFileDeleted"
+            @field-changed="onUpdateFormStatus"
+            @file-upload-started="handleFileUploadStarted"
+            @file-upload-finished="handleFileUploadFinished"
+            :panel="panel"
+            :name="panel.name"
+            :resource-id="resourceId"
+            :resource-name="resourceName"
+            :fields="panel.fields"
+            :form-unique-id="formUniqueId"
+            mode="form"
+            :validation-errors="validationErrors"
+            :via-resource="viaResource"
+            :via-resource-id="viaResourceId"
+            :via-relationship="viaRelationship"
+            :show-help-text="true"
+          />
+        </div>
+
+        <!-- Right column (1/3 width) -->
+        <div class="space-y-4">
+          <component
+            v-if="panels.length > 0"
+            :is="'form-' + panels[0].component"
+            @update-last-retrieved-at-timestamp="updateLastRetrievedAtTimestamp"
+            @file-deleted="handleFileDeleted"
+            @field-changed="onUpdateFormStatus"
+            @file-upload-started="handleFileUploadStarted"
+            @file-upload-finished="handleFileUploadFinished"
+            :panel="panels[0]"
+            :name="panels[0].name"
+            :resource-id="resourceId"
+            :resource-name="resourceName"
+            :fields="panels[0].fields"
+            :form-unique-id="formUniqueId"
+            mode="form"
+            :validation-errors="validationErrors"
+            :via-resource="viaResource"
+            :via-resource-id="viaResourceId"
+            :via-relationship="viaRelationship"
+            :show-help-text="true"
+          />
+        </div>
       </div>
 
       <!-- Update Button -->
